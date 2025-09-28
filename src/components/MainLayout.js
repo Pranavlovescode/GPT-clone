@@ -1,17 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Menu, X, Keyboard } from "lucide-react";
+import { Menu, X, Keyboard, Search } from "lucide-react";
 import Sidebar from "@/components/sidebar/Sidebar";
 import ThemeToggle from "@/components/ThemeToggle";
 import KeyboardShortcuts, {
   KeyboardShortcutsModal,
 } from "@/components/KeyboardShortcuts";
+import GlobalSearch from "@/components/GlobalSearch";
 
 export default function MainLayout({ children }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [showGlobalSearch, setShowGlobalSearch] = useState(false);
 
   // Check if we're on mobile on initial load and when window resizes
   useEffect(() => {
@@ -91,6 +93,13 @@ export default function MainLayout({ children }) {
           <h1 className="text-xl font-semibold">ChatGPT Clone</h1>
           <div className="flex items-center gap-2">
             <button
+              onClick={() => setShowGlobalSearch(true)}
+              className="p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+              title="Search all conversations (Ctrl+K)"
+            >
+              <Search size={20} />
+            </button>
+            <button
               onClick={() => setShowShortcuts(true)}
               className="p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
               title="Keyboard shortcuts"
@@ -105,10 +114,14 @@ export default function MainLayout({ children }) {
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
 
-      <KeyboardShortcuts />
+      <KeyboardShortcuts onOpenGlobalSearch={() => setShowGlobalSearch(true)} />
       <KeyboardShortcutsModal
         isOpen={showShortcuts}
         onClose={() => setShowShortcuts(false)}
+      />
+      <GlobalSearch
+        isOpen={showGlobalSearch}
+        onClose={() => setShowGlobalSearch(false)}
       />
     </div>
   );

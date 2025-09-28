@@ -46,7 +46,10 @@ export default function Sidebar() {
         </button>
       </div>
 
-      <ConversationSearch onSearchChange={handleSearchChange} />
+      <ConversationSearch
+        onSearchChange={handleSearchChange}
+        searchResults={filteredConversations}
+      />
 
       <div className="flex-grow overflow-y-auto">
         <ConversationList filteredConversations={filteredConversations} />

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useChat } from "@/context/ChatContext";
 import { useTheme } from "@/context/ThemeContext";
 
-export default function KeyboardShortcuts() {
+export default function KeyboardShortcuts({ onOpenGlobalSearch }) {
   const { addConversation } = useChat();
   const { toggleTheme } = useTheme();
 
@@ -25,6 +25,14 @@ export default function KeyboardShortcuts() {
         toggleTheme();
       }
 
+      // Ctrl/Cmd + K: Open global search
+      if ((event.ctrlKey || event.metaKey) && event.key === "k") {
+        event.preventDefault();
+        if (onOpenGlobalSearch) {
+          onOpenGlobalSearch();
+        }
+      }
+
       // Escape: Clear search (if search is focused)
       if (event.key === "Escape") {
         const searchInput = document.querySelector(
@@ -40,7 +48,7 @@ export default function KeyboardShortcuts() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [addConversation, toggleTheme]);
+  }, [addConversation, toggleTheme, onOpenGlobalSearch]);
 
   return null; // This component doesn't render anything
 }
@@ -51,6 +59,7 @@ export function KeyboardShortcutsModal({ isOpen, onClose }) {
 
   const shortcuts = [
     { keys: ["Ctrl", "N"], description: "New conversation" },
+    { keys: ["Ctrl", "K"], description: "Global search" },
     { keys: ["Ctrl", "Shift", "T"], description: "Toggle theme" },
     { keys: ["Enter"], description: "Send message" },
     { keys: ["Shift", "Enter"], description: "New line in message" },

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Search, X } from "lucide-react";
 
-export default function ConversationSearch({ onSearchChange }) {
+export default function ConversationSearch({ onSearchChange, searchResults }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -52,6 +52,12 @@ export default function ConversationSearch({ onSearchChange }) {
               <X size={14} />
             </button>
           </div>
+          {searchTerm && (
+            <div className="mt-2 text-xs text-gray-400">
+              {searchResults?.length ?? 0} conversation
+              {(searchResults?.length ?? 0) !== 1 ? "s" : ""} found
+            </div>
+          )}
         </div>
       )}
     </div>
