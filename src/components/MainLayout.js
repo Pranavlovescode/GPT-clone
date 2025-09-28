@@ -1,28 +1,33 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import Sidebar from '@/components/sidebar/Sidebar';
+"use client";
+import { useState, useEffect } from "react";
+import { Menu, X, Keyboard } from "lucide-react";
+import Sidebar from "@/components/sidebar/Sidebar";
+import ThemeToggle from "@/components/ThemeToggle";
+import KeyboardShortcuts, {
+  KeyboardShortcutsModal,
+} from "@/components/KeyboardShortcuts";
 
 export default function MainLayout({ children }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
 
   // Check if we're on mobile on initial load and when window resizes
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
-    
+
     // Check on mount
     checkIsMobile();
-    
+
     // Listen for window resize
-    window.addEventListener('resize', checkIsMobile);
-    
+    window.addEventListener("resize", checkIsMobile);
+
     // Cleanup
     return () => {
-      window.removeEventListener('resize', checkIsMobile);
+      window.removeEventListener("resize", checkIsMobile);
     };
   }, []);
 
@@ -38,8 +43,15 @@ export default function MainLayout({ children }) {
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* Mobile sidebar - only shown when mobileSidebarOpen is true */}
-      <div className={`fixed inset-0 z-40 lg:hidden ${mobileSidebarOpen ? 'block' : 'hidden'}`}>
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setMobileSidebarOpen(false)}></div>
+      <div
+        className={`fixed inset-0 z-40 lg:hidden ${
+          mobileSidebarOpen ? "block" : "hidden"
+        }`}
+      >
+        <div
+          className="fixed inset-0 bg-gray-600 bg-opacity-75"
+          onClick={() => setMobileSidebarOpen(false)}
+        ></div>
         <div className="fixed inset-y-0 left-0 flex flex-col max-w-xs w-full bg-gray-900">
           <div className="absolute top-0 right-0 p-2">
             <button
@@ -56,9 +68,11 @@ export default function MainLayout({ children }) {
       </div>
 
       {/* Desktop sidebar - controlled by desktopSidebarOpen */}
-      <div className={`hidden lg:block transition-all duration-300 overflow-hidden ${
-        desktopSidebarOpen ? 'lg:w-64' : 'lg:w-0'
-      }`}>
+      <div
+        className={`hidden lg:block transition-all duration-300 overflow-hidden ${
+          desktopSidebarOpen ? "lg:w-64" : "lg:w-0"
+        }`}
+      >
         <div className="h-full w-64">
           <Sidebar />
         </div>
@@ -75,14 +89,27 @@ export default function MainLayout({ children }) {
             <Menu size={24} />
           </button>
           <h1 className="text-xl font-semibold">ChatGPT Clone</h1>
-          <div className="w-8"></div> {/* Spacer to center title */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowShortcuts(true)}
+              className="p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+              title="Keyboard shortcuts"
+            >
+              <Keyboard size={20} />
+            </button>
+            <ThemeToggle />
+          </div>
         </div>
 
         {/* Content area */}
-        <main className="flex-1 overflow-y-auto">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
+
+      <KeyboardShortcuts />
+      <KeyboardShortcutsModal
+        isOpen={showShortcuts}
+        onClose={() => setShowShortcuts(false)}
+      />
     </div>
   );
 }

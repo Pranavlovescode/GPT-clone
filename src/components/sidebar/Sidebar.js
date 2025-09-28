@@ -1,10 +1,38 @@
-'use client';
-import { Plus } from 'lucide-react';
-import ConversationList from './ConversationList';
-import { useChat } from '@/context/ChatContext';
+"use client";
+import { useState, useMemo } from "react";
+import { Plus } from "lucide-react";
+import ConversationList from "./ConversationList";
+import ConversationSearch from "./ConversationSearch";
+import SettingsMenu from "./SettingsMenu";
+import { useChat } from "@/context/ChatContext";
 
 export default function Sidebar() {
-  const { addConversation } = useChat();
+  const { addConversation, conversations } = useChat();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter conversations based on search term
+  const filteredConversations = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return null; // Show all conversations
+    }
+
+    const lowercaseSearch = searchTerm.toLowerCase();
+    return conversations.filter((conversation) => {
+      // Search in conversation title
+      if (conversation.title.toLowerCase().includes(lowercaseSearch)) {
+        return true;
+      }
+
+      // Search in message content
+      return conversation.messages.some((message) =>
+        message.content.toLowerCase().includes(lowercaseSearch)
+      );
+    });
+  }, [conversations, searchTerm]);
+
+  const handleSearchChange = (newSearchTerm) => {
+    setSearchTerm(newSearchTerm);
+  };
 
   return (
     <aside className="flex flex-col h-full w-64 bg-gray-900 text-white">
@@ -17,15 +45,22 @@ export default function Sidebar() {
           <span>New chat</span>
         </button>
       </div>
+
+      <ConversationSearch onSearchChange={handleSearchChange} />
+
       <div className="flex-grow overflow-y-auto">
-        <ConversationList />
+        <ConversationList filteredConversations={filteredConversations} />
       </div>
+
       <div className="p-3 border-t border-gray-700">
-        <div className="flex items-center gap-2 p-2 rounded hover:bg-gray-800 cursor-pointer">
-          <div className="h-7 w-7 rounded-full bg-green-500 flex items-center justify-center text-sm font-medium">
-            PT
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 p-2 rounded hover:bg-gray-800 cursor-pointer flex-1">
+            <div className="h-7 w-7 rounded-full bg-green-500 flex items-center justify-center text-sm font-medium">
+              PT
+            </div>
+            <span className="text-sm truncate">Pranav Titambe</span>
           </div>
-          <span className="text-sm truncate">Pranav Titambe</span>
+          <SettingsMenu />
         </div>
       </div>
     </aside>
