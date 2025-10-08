@@ -1,6 +1,7 @@
 "use client";
-import { MessageSquare, Trash2 } from "lucide-react";
+import { MessageSquare, Trash2, Share2 } from "lucide-react";
 import { useChat } from "@/context/ChatContext";
+import { useState } from "react";
 
 export default function ConversationList({ filteredConversations }) {
   const {
@@ -8,9 +9,13 @@ export default function ConversationList({ filteredConversations }) {
     currentConversation,
     selectConversation,
     deleteConversation,
+    generateShareLink,
+    updateConversationTitle,
   } = useChat();
 
   const displayConversations = filteredConversations || conversations;
+  const [editingId, setEditingId] = useState(null);
+  const [editingTitle, setEditingTitle] = useState("");
 
   return (
     <div className="py-2 space-y-1">
@@ -24,7 +29,39 @@ export default function ConversationList({ filteredConversations }) {
         >
           <div className="flex items-center gap-2 truncate max-w-[180px]">
             <MessageSquare size={16} className="shrink-0" />
-            <span className="truncate text-sm">{conversation.title}</span>
+            {editingId === conversation.id ? (
+              <input
+                autoFocus
+                className="bg-transparent outline-none text-sm w-full"
+                value={editingTitle}
+                onChange={(e) => setEditingTitle(e.target.value)}
+                onBlur={() => {
+                  setEditingId(null);
+                  if (editingTitle.trim() !== "") {
+                    updateConversationTitle(conversation.id, editingTitle.trim());
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.currentTarget.blur();
+                  } else if (e.key === "Escape") {
+                    setEditingId(null);
+                  }
+                }}
+              />
+            ) : (
+              <span
+                className="truncate text-sm"
+                onDoubleClick={(e) => {
+                  e.stopPropagation();
+                  setEditingId(conversation.id);
+                  setEditingTitle(conversation.title || "");
+                }}
+                title="Double-click to rename"
+              >
+                {conversation.title}
+              </span>
+            )}
           </div>
 
           <button
@@ -35,6 +72,16 @@ export default function ConversationList({ filteredConversations }) {
             className="opacity-0 group-hover:opacity-100 hover:text-red-400"
           >
             <Trash2 size={16} />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (generateShareLink) generateShareLink(conversation.id);
+            }}
+            className="opacity-0 group-hover:opacity-100 hover:text-blue-400 ml-2"
+            title="Share conversation"
+          >
+            <Share2 size={16} />
           </button>
         </div>
       ))}

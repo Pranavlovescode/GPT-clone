@@ -251,6 +251,32 @@ export function ChatProvider({ children }) {
     URL.revokeObjectURL(url);
   };
 
+  // Generate a shareable link for a conversation (serialized as base64 in query)
+  const generateShareLink = (conversationId) => {
+    const conv = conversations.find((c) => c.id === conversationId);
+    if (!conv) return;
+
+    try {
+      const payload = encodeURIComponent(btoa(JSON.stringify(conv)));
+      const url = `${window.location.origin}/share?data=${payload}`;
+
+      // Copy to clipboard
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          // simple feedback
+          alert("Share link copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy share link:", err);
+          prompt("Copy this link:", url);
+        });
+    } catch (err) {
+      console.error("Failed to generate share link:", err);
+      alert("Failed to generate share link");
+    }
+  };
+
   // Import conversations
   const importConversations = (file) => {
     const reader = new FileReader();
@@ -280,6 +306,7 @@ export function ChatProvider({ children }) {
         addConversation,
         deleteConversation,
         updateConversationTitle,
+        generateShareLink,
         sendMessage,
         selectConversation,
         regenerateMessage,
