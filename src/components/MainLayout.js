@@ -7,6 +7,7 @@ import KeyboardShortcuts, {
   KeyboardShortcutsModal,
 } from "@/components/KeyboardShortcuts";
 import GlobalSearch from "@/components/GlobalSearch";
+import UserMenu from "@/components/UserMenu";
 
 export default function MainLayout({ children }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -107,6 +108,7 @@ export default function MainLayout({ children }) {
               <Keyboard size={20} />
             </button>
             <ThemeToggle />
+            <UserMenu />
           </div>
         </div>
 

@@ -2,10 +2,12 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { mockConversations, defaultMessage } from "@/utils/mockData";
 import { storage } from "@/utils/storage";
+import { useAuth } from "@/context/AuthContext";
 
 const ChatContext = createContext();
 
 export function ChatProvider({ children }) {
+  const { user } = useAuth() || {};
   const [conversations, setConversations] = useState([]);
   const [currentConversation, setCurrentConversation] =
     useState(defaultMessage);
@@ -138,32 +140,128 @@ export function ChatProvider({ children }) {
           )
     );
 
-    // Simulate AI response
+    // Set loading state
     setLoading(true);
-    setTimeout(() => {
-      const aiResponse = {
+
+    try {
+      // Check if user is authenticated and has API key
+      if (user && user.apiKey) {
+        // Get message history (excluding system messages) for context
+        const messageHistory = updatedConversation.messages.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        }));
+
+        // Call our API endpoint with the user's API key
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            messages: messageHistory,
+            apiKey: user.apiKey,
+            apiProvider: user.apiProvider || 'openai'
+          }),
+        });
+
+        let aiResponseContent;
+        if (!response.ok) {
+          let errorData = {};
+          try {
+            errorData = await response.json().catch(() => ({}));
+            console.error('API error:', errorData);
+          } catch (parseError) {
+            console.error('Failed to parse error response:', parseError);
+            errorData = { error: `Error status: ${response.status}` };
+          }
+          
+          // More descriptive error message based on common issues
+          if (errorData && errorData.error && typeof errorData.error === 'string' && errorData.error.includes('API key')) {
+            aiResponseContent = `Error: There's an issue with your API key. Please check your settings and ensure you've entered a valid ${user.apiProvider === 'openai' ? 'OpenAI' : 'Gemini'} API key.`;
+          } else if (response.status === 401 || response.status === 403) {
+            aiResponseContent = `Error: Authentication failed. Please check your ${user.apiProvider === 'openai' ? 'OpenAI' : 'Gemini'} API key in settings.`;
+          } else {
+            aiResponseContent = `Error: ${errorData?.error || `Failed to get response from AI (Status ${response.status})`}`;
+          }
+        } else {
+          const data = await response.json();
+          aiResponseContent = data.content;
+        }
+
+        const aiResponse = {
+          id: `msg-${Date.now() + 1}`,
+          content: aiResponseContent,
+          role: "assistant",
+          timestamp: new Date().toISOString(),
+        };
+
+        const finalConversation = {
+          ...updatedConversation,
+          messages: [...updatedConversation.messages, aiResponse],
+        };
+
+        // Update current conversation with AI response
+        setCurrentConversation(finalConversation);
+
+        // Update conversations list
+        setConversations((prevConversations) =>
+          prevConversations.map((conv) =>
+            conv.id === finalConversation.id ? finalConversation : conv
+          )
+        );
+      } else {
+        // Fallback to mock response if no API key (user not logged in or no key)
+        setTimeout(() => {
+          const aiResponse = {
+            id: `msg-${Date.now() + 1}`,
+            content: simulateResponse(content),
+            role: "assistant",
+            timestamp: new Date().toISOString(),
+          };
+
+          const finalConversation = {
+            ...updatedConversation,
+            messages: [...updatedConversation.messages, aiResponse],
+          };
+
+          // Update current conversation with AI response
+          setCurrentConversation(finalConversation);
+
+          // Update conversations list
+          setConversations((prevConversations) =>
+            prevConversations.map((conv) =>
+              conv.id === finalConversation.id ? finalConversation : conv
+            )
+          );
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      
+      // Add error message
+      const errorResponse = {
         id: `msg-${Date.now() + 1}`,
-        content: simulateResponse(content),
+        content: `Error: ${error.message || 'Something went wrong. Please try again.'}`,
         role: "assistant",
         timestamp: new Date().toISOString(),
       };
 
       const finalConversation = {
         ...updatedConversation,
-        messages: [...updatedConversation.messages, aiResponse],
+        messages: [...updatedConversation.messages, errorResponse],
       };
 
-      // Update current conversation with AI response
+      // Update with error message
       setCurrentConversation(finalConversation);
-
-      // Update conversations list
       setConversations((prevConversations) =>
         prevConversations.map((conv) =>
           conv.id === finalConversation.id ? finalConversation : conv
         )
       );
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   // Regenerate a message
@@ -197,19 +295,111 @@ export function ChatProvider({ children }) {
       )
     );
 
-    // Generate new AI response
+    // Generate new AI response using the same method as sendMessage
     setLoading(true);
-    setTimeout(() => {
-      const aiResponse = {
-        id: `msg-${Date.now()}`,
-        content: simulateResponse(userMessage.content),
+    
+    try {
+      // Check if user is authenticated and has API key
+      if (user && user.apiKey) {
+        // Get message history for context
+        const messageHistory = updatedConversation.messages.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        }));
+
+        // Call our API endpoint with the user's API key
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            messages: messageHistory,
+            apiKey: user.apiKey,
+            apiProvider: user.apiProvider || 'openai'
+          }),
+        });
+
+        let aiResponseContent;
+        if (!response.ok) {
+          let errorData = {};
+          try {
+            errorData = await response.json().catch(() => ({}));
+            console.error('API error during regeneration:', errorData);
+          } catch (parseError) {
+            console.error('Failed to parse error response during regeneration:', parseError);
+            errorData = { error: `Error status: ${response.status}` };
+          }
+          
+          // More descriptive error message based on common issues
+          if (errorData && errorData.error && typeof errorData.error === 'string' && errorData.error.includes('API key')) {
+            aiResponseContent = `Error: There's an issue with your API key. Please check your settings and ensure you've entered a valid ${user.apiProvider === 'openai' ? 'OpenAI' : 'Gemini'} API key.`;
+          } else if (response.status === 401 || response.status === 403) {
+            aiResponseContent = `Error: Authentication failed. Please check your ${user.apiProvider === 'openai' ? 'OpenAI' : 'Gemini'} API key in settings.`;
+          } else {
+            aiResponseContent = `Error: ${errorData?.error || `Failed to get response from AI (Status ${response.status})`}`;
+          }
+        } else {
+          const data = await response.json();
+          aiResponseContent = data.content;
+        }
+
+        const aiResponse = {
+          id: `msg-${Date.now() + 1}`,
+          content: aiResponseContent,
+          role: "assistant",
+          timestamp: new Date().toISOString(),
+        };
+
+        const finalConversation = {
+          ...updatedConversation,
+          messages: [...updatedConversation.messages, aiResponse],
+        };
+
+        // Update current conversation with AI response
+        setCurrentConversation(finalConversation);
+        setConversations((prevConversations) =>
+          prevConversations.map((conv) =>
+            conv.id === finalConversation.id ? finalConversation : conv
+          )
+        );
+      } else {
+        // Fallback to mock response if no API key
+        setTimeout(() => {
+          const aiResponse = {
+            id: `msg-${Date.now()}`,
+            content: simulateResponse(userMessage.content),
+            role: "assistant",
+            timestamp: new Date().toISOString(),
+          };
+
+          const finalConversation = {
+            ...updatedConversation,
+            messages: [...updatedConversation.messages, aiResponse],
+          };
+
+          setCurrentConversation(finalConversation);
+          setConversations((prevConversations) =>
+            prevConversations.map((conv) =>
+              conv.id === finalConversation.id ? finalConversation : conv
+            )
+          );
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Error regenerating message:', error);
+      
+      // Add error message
+      const errorResponse = {
+        id: `msg-${Date.now() + 1}`,
+        content: `Error: ${error.message || 'Failed to regenerate response. Please try again.'}`,
         role: "assistant",
         timestamp: new Date().toISOString(),
       };
 
       const finalConversation = {
         ...updatedConversation,
-        messages: [...updatedConversation.messages, aiResponse],
+        messages: [...updatedConversation.messages, errorResponse],
       };
 
       setCurrentConversation(finalConversation);
@@ -218,8 +408,9 @@ export function ChatProvider({ children }) {
           conv.id === finalConversation.id ? finalConversation : conv
         )
       );
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   // Select a conversation
