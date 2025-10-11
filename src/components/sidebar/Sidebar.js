@@ -78,6 +78,12 @@ export default function Sidebar() {
         >
           Export Chats
         </a>
+        <a
+          href="/theme-customizer"
+          className="block w-full text-center py-2 px-3 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors mt-2"
+        >
+          Theme Customizer
+        </a>
       </div>
 
       <div className="p-3 border-t border-gray-700 bg-gray-950/80">

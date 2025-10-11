@@ -1,3 +1,22 @@
+/* Theme Customizer Styles */
+.theme-light {
+  --bg: #f9fafb;
+  --text: #222;
+  background: var(--bg);
+  color: var(--text);
+}
+.theme-dark {
+  --bg: #18181b;
+  --text: #fafafa;
+  background: var(--bg);
+  color: var(--text);
+}
+.theme-blue {
+  --bg: #e0f2fe;
+  --text: #1e3a8a;
+  background: var(--bg);
+  color: var(--text);
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
