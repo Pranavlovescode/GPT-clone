@@ -66,8 +66,18 @@ export default function Sidebar() {
         />
       </div>
 
+
       <div className="flex-grow overflow-y-auto px-1 py-1 custom-scrollbar">
         <ConversationList filteredConversations={filteredConversations} />
+      </div>
+
+      <div className="px-3 py-2">
+        <a
+          href="/export"
+          className="block w-full text-center py-2 px-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors mt-2"
+        >
+          Export Chats
+        </a>
       </div>
 
       <div className="p-3 border-t border-gray-700 bg-gray-950/80">
