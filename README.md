@@ -108,8 +108,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 This project was developed as a group effort by:
 
-| Name | GitHub | Role |
-|------|--------|------|
+| Name | GitHub |
+|------|--------|
 | Pranav Titambe | [Pranavlovescode](https://github.com/Pranavlovescode) 
 | Siddhant Sathe | [SiddhantSathe](https://github.com/SiddhantSathe)
 | Pranav Pol | [PranavPol-01](https://github.com/PranavPol-01)
