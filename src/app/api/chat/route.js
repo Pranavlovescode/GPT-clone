@@ -266,7 +266,7 @@ async function handleGemini(messages, apiKey) {
           // Extract just the last user message
           const lastUserMessage = messages.filter(m => m.role === 'user').pop()?.content || '';
           
-          const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${cleanedKey}`;
+          const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${cleanedKey}`;
           const directResponse = await fetch(directUrl, {
             method: 'POST',
             headers: {
