@@ -5,10 +5,12 @@ import ConversationList from "./ConversationList";
 import ConversationSearch from "./ConversationSearch";
 import SettingsMenu from "./SettingsMenu";
 import { useChat } from "@/context/ChatContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Sidebar() {
   const { addConversation, conversations } = useChat();
   const [searchTerm, setSearchTerm] = useState("");
+  const { user, logout } = useAuth();
 
   // Filter conversations based on search term
   const filteredConversations = useMemo(() => {
@@ -90,10 +92,10 @@ export default function Sidebar() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-800 cursor-pointer flex-1 transition-all duration-150">
             <div className="h-7 w-7 rounded-full bg-gradient-to-br from-green-500 to-green-300 shadow-md flex items-center justify-center text-sm font-bold border-2 border-green-200">
-              PT
+              
             </div>
-            <span className="text-sm truncate font-medium text-gray-100">
-              Pranav Titambe
+            <span className="text-sm p-2 truncate font-medium text-gray-100">
+              {user?.email || "Guest User"}
             </span>
           </div>
           <div className="ml-2">
