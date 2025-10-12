@@ -115,7 +115,6 @@ This project was developed as a group effort by:
 | Pranav Pol | [PranavPol-01](https://github.com/PranavPol-01)
 | Aranav Sawant | [arnavsawant9](https://github.com/arnavsawant9)
 
-> Please replace the placeholder names, usernames, and roles with your actual team members' information.
 
 ## 🙏🏻 Acknowledgments
 
