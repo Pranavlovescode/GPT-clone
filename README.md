@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🤖 ChatGPT Clone
 
-## Getting Started
+![ChatGPT Clone](https://img.shields.io/badge/ChatGPT-Clone-brightgreen)
+![Next.js](https://img.shields.io/badge/Next.js-15.5.4-blue)
+![React](https://img.shields.io/badge/React-19.1.0-blue)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.3-blue)
 
-First, run the development server:
+A fully functional and responsive ChatGPT clone built with Next.js, React, and TailwindCSS. This project replicates the look and feel of OpenAI's ChatGPT interface with key features like conversation history, chat messaging, and a responsive design.
 
+![ChatGPT Clone Screenshot](https://via.placeholder.com/800x400?text=ChatGPT+Clone+Screenshot)
+
+## ✨ Features
+
+- 💬 **Interactive Chat Interface** - Realistic chat bubbles with user/AI distinction
+- 📱 **Fully Responsive Design** - Works seamlessly on mobile, tablet, and desktop 
+- 🌙 **Dark/Light Mode Support** - Automatic theme switching based on system preferences
+- 📝 **Markdown Support** - AI responses can include rich text formatting
+- 📚 **Conversation History** - Browse and revisit previous conversations
+- ⚡ **Fast & Lightweight** - Built with performance in mind
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18.0.0 or later
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/Pranavlovescode/GPT-clone.git
+cd chatgpt-clone
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Start the development server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js 15](https://nextjs.org/)
+- **UI**: [React 19](https://react.dev/)
+- **Styling**: [TailwindCSS 3](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Markdown Rendering**: [React Markdown](https://github.com/remarkjs/react-markdown)
+- **State Management**: React Context API
 
-## Learn More
+## 📂 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+chatgpt-clone/
+├── public/               # Static files
+├── src/
+│   ├── app/              # Next.js app directory
+│   │   ├── globals.css   # Global styles
+│   │   ├── layout.js     # Root layout
+│   │   └── page.js       # Home page
+│   ├── components/       # React components
+│   │   ├── chat/         # Chat components
+│   │   ├── sidebar/      # Sidebar components
+│   │   └── MainLayout.js # Main layout wrapper
+│   ├── context/          # React context providers
+│   │   └── ChatContext.js # Chat state management
+│   └── utils/            # Utility functions
+│       └── mockData.js   # Sample conversation data
+└── README.md             # Project documentation
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔧 Configuration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Customizing the UI
 
-## Deploy on Vercel
+You can customize the appearance by editing the TailwindCSS configuration in `tailwind.config.js` and the global styles in `src/app/globals.css`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Adding Real AI Integration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To integrate with a real AI service like OpenAI:
+
+1. Create an API route in `src/app/api/chat/route.js`
+2. Update the `sendMessage` function in `src/context/ChatContext.js` to call your API
+3. Handle API responses appropriately
+
+## 📝 Future Enhancements
+
+- [ ] Save conversations to a database
+- [ ] Voice input/output capabilities
+- [ ] File attachment and image analysis
+- [ ] Custom AI model selection
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🧑🏻‍💻 Contributors
+
+This project was developed as a group effort by:
+
+| Name | GitHub | Role |
+|------|--------|------|
+| Pranav Titambe | [Pranavlovescode](https://github.com/Pranavlovescode) 
+| Siddhant Sathe | [SiddhantSathe](https://github.com/SiddhantSathe)
+| Pranav Pol | [PranavPol-01](https://github.com/PranavPol-01)
+| Aranav Sawant | [arnavsawant9](https://github.com/arnavsawant9)
+
+> Please replace the placeholder names, usernames, and roles with your actual team members' information.
+
+## 🙏🏻 Acknowledgments
+
+- Inspired by [OpenAI's ChatGPT](https://chat.openai.com)
+- Built with [Next.js](https://nextjs.org/)
+- Styled with [TailwindCSS](https://tailwindcss.com/)
+- Icons from [Lucide](https://lucide.dev/)
+
+---
+
+Created with ❤️ by the ChatGPT Clone Team
