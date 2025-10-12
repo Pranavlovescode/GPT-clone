@@ -7,7 +7,11 @@
 
 A fully functional and responsive ChatGPT clone built with Next.js, React, and TailwindCSS. This project replicates the look and feel of OpenAI's ChatGPT interface with key features like conversation history, chat messaging, and a responsive design.
 
-![ChatGPT Clone Screenshot](https://via.placeholder.com/800x400?text=ChatGPT+Clone+Screenshot)
+
+<img width="1555" height="751" alt="image" src="https://github.com/user-attachments/assets/3af5a579-4117-413e-b55d-7eb561bb68f0" />
+
+
+
 
 ## ✨ Features
 
