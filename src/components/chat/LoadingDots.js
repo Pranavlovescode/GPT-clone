@@ -34,9 +34,12 @@ export default function LoadingDots({
         <span className="sr-only">Loading, please wait…</span>
       </span>
       <div className="flex space-x-1">
-        {dotElements}
+        <div className="h-2 w-2 bg-green-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+        <div className="h-2 w-2 bg-green-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+        <div className="h-2 w-2 bg-green-500 rounded-full animate-bounce"></div>
+        {/* {dotElements} */}
       </div>
-      <style jsx>{`
+      {/* <style jsx>{`
         @keyframes loading-dot {
           0%, 80%, 100% {
             opacity: 0.3;
@@ -50,7 +53,7 @@ export default function LoadingDots({
         .animate-loading-dot {
           animation: loading-dot 1s infinite;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 }
