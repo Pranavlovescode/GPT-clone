@@ -20,6 +20,7 @@ A fully functional and responsive ChatGPT clone built with Next.js, React, and T
 - 🌙 **Dark/Light Mode Support** - Automatic theme switching based on system preferences
 - 📝 **Markdown Support** - AI responses can include rich text formatting
 - 📚 **Conversation History** - Browse and revisit previous conversations
+- 🔐 **API Key Authentication** - Secure login/signup with support for OpenAI & Gemini APIs
 - ⚡ **Fast & Lightweight** - Built with performance in mind
 
 ## 🚀 Getting Started

@@ -53,7 +53,7 @@ export async function tryGeminiModels(apiKey, messages, primaryModel = 'gemini-p
     try {
       console.log(`Attempting to use Gemini model: ${modelName}`);
       
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-06-17:generateContent?key=${apiKey}`;
       
       const response = await fetch(url, {
         method: 'POST',
