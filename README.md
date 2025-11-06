@@ -117,25 +117,6 @@ GPT-clone/
 └── README.md
 ```
 
-```
-chatgpt-clone/
-├── public/               # Static files
-├── src/
-│   ├── app/              # Next.js app directory
-│   │   ├── globals.css   # Global styles
-│   │   ├── layout.js     # Root layout
-│   │   └── page.js       # Home page
-│   ├── components/       # React components
-│   │   ├── chat/         # Chat components
-│   │   ├── sidebar/      # Sidebar components
-│   │   └── MainLayout.js # Main layout wrapper
-│   ├── context/          # React context providers
-│   │   └── ChatContext.js # Chat state management
-│   └── utils/            # Utility functions
-│       └── mockData.js   # Sample conversation data
-└── README.md             # Project documentation
-```
-
 ## 🔧 Configuration
 
 ### Customizing the UI
