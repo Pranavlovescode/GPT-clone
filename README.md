@@ -170,7 +170,7 @@ This project was developed as a group effort by:
 | Pranav Titambe | [Pranavlovescode](https://github.com/Pranavlovescode) 
 | Siddhant Sathe | [SiddhantSathe](https://github.com/SiddhantSathe)
 | Pranav Pol | [PranavPol-01](https://github.com/PranavPol-01)
-| Aranav Sawant | [arnavsawant9](https://github.com/arnavsawant9)
+| Arnav Sawant | [arnavsawant9](https://github.com/arnavsawant9)
 
 
 ## 🙏🏻 Acknowledgments
