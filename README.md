@@ -114,9 +114,9 @@ This project was developed as a group effort by:
 
 | Name | GitHub |
 |------|--------|
-| Pranav Titambe | [Pranavlovescode](https://github.com/Pranavlovescode) 
-| Siddhant Sathe | [SiddhantSathe](https://github.com/SiddhantSathe)
-| Pranav Pol | [PranavPol-01](https://github.com/PranavPol-01)
+| Panya Titambe | [Pranavlovescode](https://github.com/Pranavlovescode) 
+| Siddhu Sathe | [SiddhantSathe](https://github.com/SiddhantSathe)
+| Polly | [PranavPol-01](https://github.com/PranavPol-01)
 | Arnav Sawant | [arnavsawant9](https://github.com/arnavsawant9)
 
 
