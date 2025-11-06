@@ -65,6 +65,59 @@ yarn dev
 ## 📂 Project Structure
 
 ```
+GPT-clone/
+├── .git/
+├── .next/
+├── node_modules/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── chat/route.js
+│   │   ├── export/page.js
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.js
+│   │   ├── page.js
+│   │   ├── login/page.js
+│   │   ├── signup/page.js
+│   │   ├── settings/page.js
+│   │   └── theme-customizer/page.js
+│   ├── components/
+│   │   ├── chat/
+│   │   │   ├── ChatInterface.js
+│   │   │   ├── ChatMessage.js
+│   │   │   └── LoadingDots.js
+│   │   ├── sidebar/
+│   │   │   ├── Sidebar.js
+│   │   │   ├── ConversationList.js
+│   │   │   ├── ConversationSearch.js
+│   │   │   └── SettingsMenu.js
+│   │   ├── GlobalSearch.js
+│   │   ├── KeyboardShortcuts.js
+│   │   ├── MainLayout.js
+│   │   ├── ProtectedRoute.js
+│   │   ├── ThemeToggle.js
+│   │   └── UserMenu.js
+│   ├── context/
+│   │   ├── AuthContext.js
+│   │   ├── ChatContext.js
+│   │   └── ThemeContext.js
+│   └── utils/
+│       ├── exportChats.js
+│       ├── geminiModelFallback.js
+│       ├── mockData.js
+│       └── storage.js
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── postcss.config.js
+├── tailwind.config.js
+└── README.md
+```
+
+```
 chatgpt-clone/
 ├── public/               # Static files
 ├── src/
